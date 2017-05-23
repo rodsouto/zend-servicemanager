@@ -154,4 +154,15 @@ class ReflectionBasedAbstractFactoryTest extends TestCase
         $this->assertInstanceOf(TestAsset\ClassWithScalarDependencyDefiningDefaultValue::class, $instance);
         $this->assertEquals('bar', $instance->foo);
     }
+
+    public function testFactoryWillUseDefaultNullValueWhenPresentIfClassHasNoParameter()
+    {
+        $factory = new ReflectionBasedAbstractFactory();
+        $instance = $factory(
+            $this->container->reveal(),
+            TestAsset\ClassWithTypeHintedConstructorParameterAndDefaultNullValue::class
+        );
+        $this->assertInstanceOf(TestAsset\ClassWithTypeHintedConstructorParameterAndDefaultNullValue::class, $instance);
+        $this->assertEquals(null, $instance->sample);
+    }
 }
